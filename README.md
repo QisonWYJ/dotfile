@@ -1,4 +1,4 @@
-# Ruilisi dotfiles
+# dotfiles
 
 Forked from https://github.com/skwp/dotfiles
 
@@ -17,10 +17,6 @@ python3 -m pip install --user --upgrade pynvim
 
 ```sh
 bash -c "`curl -fsSL https://raw.githubusercontent.com/QisonWYJ/dotfile/master/install.sh`"
-```
-Or
-```sh
-bash -c "`curl -fsSL https://github.com/QisonWYJ/dotfile/raw/branch/master/install.sh`"
 ```
 
 ## Upgrade
