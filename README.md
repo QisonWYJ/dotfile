@@ -16,11 +16,11 @@ python3 -m pip install --user --upgrade pynvim
 ## Install
 
 ```sh
-bash -c "`curl -fsSL https://raw.githubusercontent.com/ruilisi/dotfiles/master/install.sh`"
+bash -c "`curl -fsSL https://raw.githubusercontent.com/QisonWYJ/dotfile/master/install.sh`"
 ```
 Or
 ```sh
-bash -c "`curl -fsSL https://git.ruilisi.com/ruilisi/dotfiles/raw/branch/master/install.sh`"
+bash -c "`curl -fsSL https://github.com/QisonWYJ/dotfile/raw/branch/master/install.sh`"
 ```
 
 ## Upgrade
@@ -149,6 +149,15 @@ PRE ,     |Switch to Tmux command line mode
 PRE d     |Exit Session
 PRE D     |Exit Session
 PRE 1     |Enter pane 1
+PRE >/<   |Cheatsheet
+PRE {/}   |Move pane to previous/next position
+PRE C-o   |rotate window ‘up’ (i.e. move all panes)
+PRE M-o   |rotate window ‘down’
+PRE z     |Zoom/Unzoom
+PRE m     |Mark
+PRE !     |Move the current pane into a new separate
+PRE o     |Go to the next pane (cycle through all of them)
+PRE ;     |Go to the ‘last’ (previously used) pane
 > `C` is short for `Ctrl`
 
 Press `PRE [` to enter Scroll Mode
@@ -180,16 +189,43 @@ SPC g .  | Enter version control transient-state
 SPC l p  | Preview markdown
 
 **Typescript**
+
 Shortcut | Function
 :-------:|:--------:
 SPC l p  | Definitaion Preview
-SPC l t  | Type
+SPC l t   | Type
 SPC l e  | Rename
 SPC l d  | Doc
-g d      | Go to definition
-SPC e L  | List checkers
+g d         | Go to definition
+SPC e L | List checkers
+
+**Tab**
+Shortcut | Function
+:--------:|:--------:
+\\[1-9]     | Open tab 1-9
+SPC t t    | Open tab management window
+SPC w F  | Open a new tab
+SPC w o  | Switch tab
+
+**History**
+Shortcut | Function
+:--------:|:--------:
+`F7`     | Undo history
+
+
+**Debug**
+Shortcut    | Function
+:-----------:|:--------:
+SPC h I     | Show Debug Info
+
+**Git**
+Shortcut | Function
+:-------:|:--------:
+<leader> b  | Togggle git blame info at the end of current line
+<SPC> gb    | Open git blame window
 
 #### markdown
+
 * Install `prettier`: `yarn global add prettier` or `npm install --global prettier`
 * Open vim and enter command: `:SPUPdate`
 
@@ -202,7 +238,7 @@ SPC e L  | List checkers
 - `,qc` - close quickfix
 
 #### Typescript
-* fix `SpaceVim Unknown function: TSOnBufEnter`
+* Fix `SpaceVim Unknown function: TSOnBufEnter`
   * References
     * https://github.com/SpaceVim/SpaceVim/issues/1800
     * https://github.com/SpaceVim/SpaceVim/issues/3221
@@ -211,10 +247,19 @@ SPC e L  | List checkers
     * Open vim  run `:CheckHealth` check the current vim status, and fix any errors.
     * Install pip for `python3` if not: `curl https://bootstrap.pypa.io/get-pip.py | python3`
     * `pip install neovim`
-    * `npm install -g neovim`
+    * `npm install -g neovim typescript`
     * Run `:UpdateRemotePlugins` in vim and reopen vim
-    * If it still doesn't work, add `call dein#reinstall(['nvim-typescript'])` to `~/.local/share/nvim/rplugin.vim`, reopen vim and wait for the `nvim-typescript` plugin to install
-    * If nvim-typescript still does not work, go to `~/.cache/vimfiles/repos` and do `npm config set registry=https://registry.npmjs.com/`, then `./install.sh`
+* If plugin `nvim-typescript` is not installed successfully(`vim` -> `:SPUpdate`), try following steps one by one until succeeded:
+  1. Add `call dein#reinstall(['nvim-typescript'])` to `~/.local/share/nvim/rplugin.vim`, reopen vim and wait for the `nvim-typescript` plugin to install
+  2. Install it manually:
+  ```bash
+  cd ~/.cache/vimfiles/repos/github.com/mhartington/
+  rm -rf nvim-typescript
+  git clone https://github.com/mhartington/nvim-typescript
+  cd nvim-typescript
+  npm config set registry=https://registry.npmjs.com/
+  ./install.sh
+  ```
 
 #### Rails & Ruby
 - `,vv` & `,cc` to switch between view and controller-they are the mappings corresponding to :Rcontroller and :Rview. Explore: R family commands can learn more about the fun of rails.vim!
@@ -246,32 +291,6 @@ The interface elements of SpaceVim start with [SPC] t or [SPC] T. You can view t
 - `SPC c l` - toggle comment lines
 - `SPC c p` - toggle comment paragraphs
 
-#### Switch Tab:
-When multiple files are opened, the files will be listed in the tab bar in the form of Tabs, and you can switch to the Tab with the corresponding serial number via `\[1-9]`.
-
-- `\1` - Open tag 1
-- `\2` - Open tag 2
-- `\3` - Open tag 3
-- `\4` - Open tag 4
-- `\5` - Open tag 5
-- `\6` - Open tag 6
-- `\7` - Open tag 7
-- `\8` - Open tag 8
-- `\9` - Open tag 9
-
-#### History
-Shortcut | Function
-:--------|:--------
-`F7`     | Undo history
-
-
-#### Debug
-Shortcut    | Function
-:-----------|:--------
-SPC h I     | Show Debug Info
-
-
-
 ## iTerm
 
 ### iTerm Solarized Colors
@@ -279,7 +298,7 @@ SPC h I     | Show Debug Info
 YADR will install the Solarized color scheme into iTerm. You can choose Solarized Dark in Profiles => Colors => Load Presets.
 
 
-## [Homebrew](http:/mxcl.github.com/homebrew/)
+## [Homebrew](http://mxcl.github.com/homebrew/)
 
 
 Homebrew is a missing OSX package management system, and it will be installed automatically.

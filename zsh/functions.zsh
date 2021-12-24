@@ -156,6 +156,7 @@ function Replace () {
     SED_CMD=s${SEP}$SRC${SEP}$DST${SEP}g
   fi
   if [[ "$(uname)" == "Darwin" ]]; then
+    echo "xargs sed -i '' \"${SED_CMD}\""
     echo $MATCHED_FILES | xargs sed -i '' "${SED_CMD}"
   elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
     echo $MATCHED_FILES | xargs sed -i ${SED_CMD}
@@ -283,29 +284,6 @@ function stern {
   echo "stern $finalopts --kubeconfig=$HOME/.kube/${KCONTEXT}_config"
   command stern $finalopts -t --since 10m --kubeconfig=$HOME/.kube/${KCONTEXT}_config
 }
-function helm() {
-  DEBUG=false
-  finalopts=()
-  while [[ $@ != "" ]] do
-    case $1 in
-      --context=*)
-        KCONTEXT="${i#*=}"
-        shift
-        ;;
-      --debug)
-        DEBUG=true
-        finalopts+=($1)
-        shift
-        ;;
-      *)
-        finalopts+=($1)
-        shift
-        ;;
-    esac
-  done
-  [[ $DEBUG == "true" ]] && echo "helm $finalopts --kubeconfig=$HOME/.kube/${KCONTEXT}_config"
-  command helm $finalopts --kubeconfig=$HOME/.kube/${KCONTEXT}_config
-}
 
 function rgm {
   args=("${(@s/,/)1}")
@@ -365,10 +343,22 @@ function gc {
   (git commit --verbose $*) || return
   (git commit --amend --author="$name <$emails[$index]>") || return
 }
+
 function gcm {
   (gc --message $*) || return
 }
 
 function random_hex {
   openssl rand -hex $(expr $1 / 2)
+}
+
+function random-string {
+    cat /dev/urandom |  LC_ALL=C tr -dc 'a-zA-Z0-9' | fold -w ${1:-32} | head -n 1
+}
+
+function list-large-files {
+  LIST=`du $1`
+  echo $LIST | grep '\dK.' | sort -n
+  echo $LIST | grep '\dM.' | sort -n
+  echo $LIST | grep '\dG.' | sort -n
 }
